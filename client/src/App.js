@@ -1,14 +1,39 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import axios from "axios";
 import "./App.css";
 
 function App() {
-  const [data, setData] = useState(null);
+  const [userName, setUserName] = useState("");
+  const [wish, setWish] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!userName || !wish) {
+      setError("Please fill out all fields");
+      return;
+    }
+
+    setLoading(true);
+    setError(""); // Clear any previous errors
+
+    axios
+      .post("http://localhost:3001/submit", {
+        userName,
+        wish,
+      })
+      .then((response) => {
+        console.log("Success:", response);
+      })
+      .catch((error) => {
+        setError(`${error}`);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <div className="App">
@@ -19,21 +44,29 @@ function App() {
       <main>
         <p className="bold">Ho ho ho, what you want for Christmas?</p>
 
-        <form method="post">
+        {error && <p className="error">{error}</p>}
+
+        <form method="post" onSubmit={handleSubmit}>
           who are you?
-          <input name="userid" placeholder="charlie.brown" required />
+          <input
+            name="userid"
+            placeholder="charlie.brown"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
           what do you want for christmas?
           <textarea
             name="wish"
             rows="10"
             cols="45"
-            maxlength="100"
+            maxLength="100"
             placeholder="Gifts!"
-            required
+            value={wish}
+            onChange={(e) => setWish(e.target.value)}
           ></textarea>
           <br />
-          <button type="submit" id="submit-letter">
-            Send
+          <button type="submit" id="submit-letter" disabled={loading}>
+            {loading ? "Sending..." : "Send"}
           </button>
         </form>
       </main>

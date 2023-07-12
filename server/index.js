@@ -1,6 +1,9 @@
 const path = require("path");
 const express = require("express");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const axios = require("axios");
+const cors = require("cors");
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 
@@ -23,6 +26,15 @@ const transporter = nodemailer.createTransport({
 //Server setup
 const app = express();
 
+// Enable CORS for all routes
+app.use(cors());
+
+// Parse JSON request bodies
+app.use(bodyParser.json());
+
+// For Logs
+app.use(morgan());
+
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "../client/build")));
 
@@ -42,6 +54,8 @@ app.get("*", (req, res) => {
 // Handle the form submission
 app.post("/submit", async (req, res) => {
   const formData = req.body; // Get the form data from the request body
+
+  console.log("formData", formData);
 
   try {
     // Fetch user data using axios
@@ -92,10 +106,10 @@ app.post("/submit", async (req, res) => {
     });
 
     // Send a success page back to the client
-    res.redirect("/success");
+    res.status(200).send("Received the wish!");
   } catch (error) {
     console.error("Error fetching user data:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send("Internal Server Error!");
   }
 });
 
