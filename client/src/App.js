@@ -32,7 +32,11 @@ function App() {
         }
       })
       .catch((error) => {
-        setError(`${error}`);
+        if (error.response && error.response.data) {
+          setError(error.response.data);
+        } else {
+          setError("An error occurred.");
+        }
       })
       .finally(() => {
         setLoading(false);
