@@ -25,7 +25,9 @@ function App() {
         wish,
       })
       .then((response) => {
-        console.log("Success:", response);
+        if (response.status === 200) {
+          alert(`${response.data}`);
+        }
       })
       .catch((error) => {
         setError(`${error}`);

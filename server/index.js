@@ -55,8 +55,6 @@ app.get("*", (req, res) => {
 app.post("/submit", async (req, res) => {
   const formData = req.body; // Get the form data from the request body
 
-  console.log("formData", formData);
-
   try {
     // Fetch user data using axios
     const userResponse = await axios.get(
@@ -106,9 +104,8 @@ app.post("/submit", async (req, res) => {
     });
 
     // Send a success page back to the client
-    res.status(200).send("Received the wish!");
+    res.status(200).send("Successfully received the wish!");
   } catch (error) {
-    console.error("Error fetching user data:", error);
     res.status(500).send("Internal Server Error!");
   }
 });
