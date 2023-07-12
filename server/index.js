@@ -6,7 +6,7 @@ const axios = require("axios");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
-
+require("dotenv").config();
 const isAgeBelow10Years = require("../util.js");
 
 const PORT = process.env.PORT || 3001;
@@ -18,8 +18,8 @@ const transporter = nodemailer.createTransport({
   host: "smtp.ethereal.email",
   port: 587,
   auth: {
-    user: "xzavier.swift@ethereal.email", //FIXME: Use env
-    pass: "QGuac4eaKgfmdYMyZJ",
+    user: process.env.NODEMAILER_USER,
+    pass: process.env.NODEMAILER_PASSWORD,
   },
 });
 

@@ -8,6 +8,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const baseURL = "https://santa-gift-app.onrender.com";
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -20,7 +22,7 @@ function App() {
     setError(""); // Clear any previous errors
 
     axios
-      .post("http://localhost:3001/submit", {
+      .post(`${baseURL}/submit`, {
         userName,
         wish,
       })
