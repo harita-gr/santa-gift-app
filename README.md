@@ -1,6 +1,7 @@
 # 🎅 Santa Gift APP
 
-<img width="541" alt="image" src="https://github.com/harita-gr/santa-gift-app/assets/61909695/0370d688-4ce0-4480-9243-57bce0dc9cf7">
+<img width="541" alt="image" src="https://github.com/harita-gr/santa-gift-app/assets/61909695/198f7578-ea8b-4552-9c33-9c5ee9f6699e">
+
 
 ---
 ### Built Using
