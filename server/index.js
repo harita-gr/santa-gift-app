@@ -67,9 +67,6 @@ app.post("/submit", async (req, res) => {
       (user) => user.username === formData.userName
     );
 
-    //FIXME: Remove console logs
-    console.log("registeredUser", registeredUser);
-
     if (!registeredUser) {
       return res.status(400).send("Child is not registered.");
     }
@@ -79,7 +76,6 @@ app.post("/submit", async (req, res) => {
       "https://raw.githubusercontent.com/alj-devops/santa-data/master/userProfiles.json"
     );
     const profileData = profileResponse.data;
-    console.log("profileData", profileData);
 
     // Check if the profile is existing
     const userProfile = profileData.find(
@@ -92,7 +88,6 @@ app.post("/submit", async (req, res) => {
 
     //Validation - Check if user age > 10
     const isAgeValid = isAgeBelow10Years(userProfile.birthdate);
-    console.log("isAgeValid", isAgeValid);
     if (!isAgeValid) {
       return res.status(400).send("The child is not below 10 years old!");
     }
@@ -114,8 +109,6 @@ app.post("/submit", async (req, res) => {
 cron.schedule("*/15 * * * * *", async () => {
   if (pendingRequests.length > 0) {
     try {
-      console.log("pendingRequests", pendingRequests);
-
       // Compose the email body
       let emailBody = "";
       pendingRequests.forEach((request) => {
